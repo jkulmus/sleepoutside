@@ -1,5 +1,11 @@
 import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { getParam } from "./utils.mjs";
 import { findProductById } from "./productData.mjs";
+import {productDetails} from "./productDetails.mjs";
+
+
+const productId = getParam("product");
+productDetails(productId);
 
 function addProductToCart(product) {
   // always store the cart as an array
