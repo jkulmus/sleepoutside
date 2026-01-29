@@ -1,4 +1,5 @@
 import { getData } from '/productData.mjs';
+import { renderListWithTemplate } from './utils.mjs';
 
 function productCardTemplate(product) {
     return `
@@ -13,13 +14,20 @@ function productCardTemplate(product) {
     `;
 }
 
-function renderList(list, parentElement) {
-    const htmlString = list.map(productCardTemplate);
-    parentElement.adjacentHTML("afterbegin", htmlString.join(''));
+function filterFeatured(list) {
+    return list.slice(0, 4);
 }
 
 export default async function productList(category, selector) {
     const parentElement = document.querySelector(selector);
+
     const data = await getData(category);
-    renderList(data, parentElement);
+
+    const featured = filterFeatured(data);
+
+    renderListWithTemplate(
+        productCardTemplate,
+        parentElement,
+        featured
+    );
 }
