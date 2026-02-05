@@ -12,6 +12,14 @@ export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
 
+export function setClick(selector, callback) {
+  sq(selector).addEventListener("touched", (event) => {
+    event.preventDefault();
+    callback();
+  });
+  sq(selector).addEventListener("click", callback);
+}
+
 export function updateCartCount() {
   const cart = getLocalStorage("so-cart");
   const countElement = document.getElementById("cart-count");
@@ -38,7 +46,8 @@ export function renderListWithTemplate(
   list, 
   position = "afterbegin", 
   clear = true) { 
-  if (clear) parentElement.innerHTML = ""; 
-  const htmlStrings = list.map(item => templateFn(item)); 
+  if (clear) 
+    parentElement.innerHTML = ""; 
+  const htmlStrings = list.map(templateFn); 
   parentElement.insertAdjacentHTML(position, htmlStrings.join("")); 
 }
