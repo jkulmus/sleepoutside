@@ -146,6 +146,18 @@ button {
 .product-card p {
   margin: 0.5em 0;
 }
+.product-card a {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--black);
+}
+.product-card img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+  background-color: #f9f9f9;
+}
 
 .card__brand {
   font-size: var(--small-font);
@@ -242,4 +254,44 @@ footer {
 
 .cart-card__remove:hover {
   color: #b30000;
+}
+
+/* Anmation for cart icon */
+@keyframes cart-bounce {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.2) rotate(10deg); }
+  50% { transform: scale(.2) rotate(-10deg); }
+  75% { transform: scale(1.2) rotate(10deg); }
+  100% { transform: scale(1); }
+}
+
+.animate-cart {
+  animation: cart-bounce 0.4s ease-in-out;
+}
+
+/* Positioning for cart badge */
+.cart {
+  padding-top: 1.8em;
+  position: relative;
+  text-align: center;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -2px;
+  right: -8px;
+  background-color: #f0a30a;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.75em;
+  font-weight: bold;
+  z-index: 5;
+  min-width: 15px;
+  text-align: center;
+}
+
+/* Only show badge if it has content */
+.cart-badge:not(:empty) {
+  display:block;
 }
