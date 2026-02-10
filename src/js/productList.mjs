@@ -14,12 +14,10 @@ function productCardTemplate(product) {
   </li>`;
 }
 
-export default async function productList(selector, category) {
-  // get the element we will insert the list into from the selector
-  const el = document.querySelector(selector);
-  // get the list of products
+export default async function productList(selector, category) { 
+  const el = document.querySelector(selector); 
+  
   const products = await getData(category);
-  console.log(products);
-  // render out the product list to the element
-  renderListWithTemplate(productCardTemplate, el, products);
+
+  renderListWithTemplate(productCardTemplate, el, products); 
 }
