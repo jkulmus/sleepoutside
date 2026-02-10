@@ -69,7 +69,7 @@ function loadTemplate(path) {
 
 export function updateCartCount() {
   const cartItems = getLocalStorage('so-cart') || [];
-  const cartCountEl = document.querySelector('.cart-count');
+  const cartCountEl = document.querySelector('.cart-badge');
 
   if (cartCountEl) {
     cartCountEl.textContent = cartItems.length;

@@ -15,10 +15,12 @@ export default function ShoppingCart() {
 
 function removeFromCart(id) {
   let cartItems = getLocalStorage("so-cart");
-  const index = cartItems.findIndex((item) => item.id === id);
+
+  const index = cartItems.findIndex((item) => item.Id === id);
   if (index !== -1) {
     cartItems.splice(index, 1);
   }
+  
   setLocalStorage("so-cart", cartItems);
   ShoppingCart();
   updateCartCount();

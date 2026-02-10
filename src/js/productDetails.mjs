@@ -15,11 +15,10 @@ function addToCart() {
 
   updateCartCount();
 
-  const backpack = document.querySelector(".cart img");
+  const backpack = document.querySelector(".cart svg");
   if (backpack) {
-    backpack.classList.add("animate-bounce");
-
-    setTimeout(() => backpack.classList.remove("animate-bounce"), 500);
+    backpack.classList.add("animate-cart");
+    setTimeout(() => backpack.classList.remove("animate-cart"), 500);
   }
 }
 
