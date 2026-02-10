@@ -4,34 +4,23 @@ import { setLocalStorage, getLocalStorage, updateCartCount } from "./utils.mjs";
 let product = {};
 
 export default async function productDetails(productId) {
-  // fetch
   product = await findProductById(productId);
-  // if no product found, exit
-  if (!product) return;
-
-  // render
   renderProductDetails();
-  updateCartCount();
-
-  // add to cart button
-  const addButton = document.getElementById("addToCart");
-  if (addButton) {
-    addButton.onclick = addToCart;
-  }
+  document.getElementById("addToCart").addEventListener("click", addToCart);
 }
-
 function addToCart() {
-  const cart = getLocalStorage("so-cart");
-  cart.push(product);
-  setLocalStorage("so-cart", cart);
+  let cartContents = getLocalStorage("so-cart") || [];
+  cartContents.push(product);
+  setLocalStorage("so-cart", cartContents);
 
-  // trigger icon animation
-  const cartIcon = document.querySelector(".cart");
-  if (cartIcon) {
-    cartIcon.classList.add("animate-cart");
-    setTimeout(() => cartIcon.classList.remove("animate-cart"), 400);
-  }
   updateCartCount();
+
+  const backpack = document.querySelector(".cart img");
+  if (backpack) {
+    backpack.classList.add("animate-bounce");
+
+    setTimeout(() => backpack.classList.remove("animate-bounce"), 500);
+  }
 }
 
 function renderProductDetails() {

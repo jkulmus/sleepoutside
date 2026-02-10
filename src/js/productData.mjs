@@ -7,9 +7,10 @@ function convertToJson(res) {
 }
 
 export function getData(category = "tents") {
-  return fetch(`/json/${category}.json`)
+  return fetch(`../json/${category}.json`)
     .then(convertToJson)
-  }
+    .then((data) => data);
+}
 
 export async function findProductById(id) {
   const products = await getData();
