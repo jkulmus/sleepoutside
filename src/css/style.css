@@ -295,3 +295,11 @@ footer {
 .cart-badge:not(:empty) {
   display:block;
 }
+
+/* Alert Style */
+.alert-list p {
+  padding: 1em;
+  margin: 0;
+  font-weight: bold;
+  text-align: center;
+}
