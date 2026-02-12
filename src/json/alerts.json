@@ -1,0 +1,15 @@
+[
+    {
+        "message": "Flash sale! This is a test!",
+        "type": "sale",
+        "timeout": 6000
+    },
+    {
+        "message": "Testing it out... New gear coming to you",
+        "type": "info"
+    },
+    {
+        "message": "Severe weather expected this weekend... (Test)",
+        "type": "warning"
+    }
+]

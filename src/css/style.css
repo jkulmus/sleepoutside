@@ -146,6 +146,18 @@ button {
 .product-card p {
   margin: 0.5em 0;
 }
+.product-card a {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--black);
+}
+.product-card img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+  background-color: #f9f9f9;
+}
 
 .card__brand {
   font-size: var(--small-font);
@@ -241,4 +253,154 @@ button {
 footer {
   font-size: var(--small-font);
   padding: 1em;
+}
+
+/* --- Cart Removal Styles --- */
+.cart-card {
+  position: relative;
+}
+
+.cart-card__remove {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
+  cursor: pointer;
+  color: #ff4d4d;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 5px;
+  line-height: 1;
+  transition: color 0.2s ease;
+  z-index: 10;
+}
+
+.cart-card__remove:hover {
+  color: #b30000;
+}
+
+/* Anmation for cart icon */
+@keyframes cart-bounce {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.2) rotate(10deg); }
+  50% { transform: scale(.2) rotate(-10deg); }
+  75% { transform: scale(1.2) rotate(10deg); }
+  100% { transform: scale(1); }
+}
+
+.animate-cart {
+  animation: cart-bounce 0.4s ease-in-out;
+}
+
+/* Positioning for cart badge */
+.cart {
+  padding-top: 1.8em;
+  position: relative;
+  text-align: center;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -2px;
+  right: -8px;
+  background-color: #f0a30a;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.75em;
+  font-weight: bold;
+  z-index: 5;
+  min-width: 15px;
+  text-align: center;
+}
+
+/* Only show badge if it has content */
+.cart-badge:not(:empty) {
+  display:block;
+}
+
+/* Alert Style */
+.alert-list {
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.alert-list p {
+  padding: 1em;
+  margin: 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.alert-item {
+  position: relative;
+  padding: 1em 2.5em 1em 3em;
+  margin: 0;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.alert-icon {
+  font-size: 1.2em;
+  display: flex;
+  align-items: center;
+}
+
+.alert-close {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0 5px;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.slide-down {
+  animation: slideDown 0.4s ease-out;
+}
+
+/* Product List */
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  a {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    align-items: center;
+
+    text-decoration: none;
+    img {
+      width: 5rem;  
+    }
+    
+    h3 {
+      color: black;
+    }
+    
+  }
+}
+
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
