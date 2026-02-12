@@ -348,6 +348,30 @@ footer {
   animation: slideDown 0.4s ease-out;
 }
 
+/* Product List */
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  a {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    align-items: center;
+
+    text-decoration: none;
+    img {
+      width: 5rem;  
+    }
+    
+    h3 {
+      color: black;
+    }
+    
+  }
+}
+
+
 @keyframes slideDown {
   from {
     transform: translateY(-20px);
