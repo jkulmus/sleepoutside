@@ -15,4 +15,4 @@ const label = category
 
 document.querySelector("h1").textContent = `Top Products: ${label}`;
 
-productList(".product-list", catagory);
+productList(".product-list", category);
