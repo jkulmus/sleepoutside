@@ -78,7 +78,7 @@ export function updateCartCount() {
 }
 
 export async function loadHeaderFooter() {
-  const headerTemplateFn = loadTemplate("partials/header.html");
+  const headerTemplateFn = loadTemplate("/partials/header.html"); 
   const footerTemplateFn = loadTemplate("/partials/footer.html");
   const headerEl = document.querySelector("#main-header");
   const footerEl = document.querySelector("#main-footer");
