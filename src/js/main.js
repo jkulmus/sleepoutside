@@ -1,10 +1,10 @@
 
 import { loadHeaderFooter } from "./utils.mjs";
-// import loadAlerts from "./alert.js";
+
 import productList from "./productList.mjs";
+// import loadAlerts from "./alert.js";
 
 loadHeaderFooter();
 
 productList(".product-list", "tents");
 
-// cache bust
