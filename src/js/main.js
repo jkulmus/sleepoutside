@@ -4,7 +4,6 @@ import { loadHeaderFooter } from "./utils.mjs";
 import productList from "./productList.mjs";
 
 loadHeaderFooter();
-// loadAlerts();
 
 productList(".product-list", "tents");
 
