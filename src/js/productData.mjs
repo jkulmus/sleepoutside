@@ -14,5 +14,5 @@ export function getData(category = "tents") {
 
 export async function findProductById(id) {
   const products = await getData();
-  return products.find((item) => item.Id === id);
+  return products.find((item) => String(item.Id) === String(id));
 }
