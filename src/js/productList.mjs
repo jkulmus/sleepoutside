@@ -9,7 +9,7 @@ function productCardTemplate(product) {
         ? Math.round(((originalPrice - final) / originalPrice) * 100)
         : 0;
   return `<li class="product-card">
-    <a href="product_pages/index.html?product=${product.Id}">
+    <a href="/product_pages/index.html?product=${product.Id}">
         <p class="discount__badge">
             -${discountPercentage}%
         </p>

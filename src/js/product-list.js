@@ -7,8 +7,6 @@ const category = getParam("category");
 productList(".product-list", category);
 
 
-
-
 const label = category
   .split("-")
   .map(word => word[0].toUpperCase() + word.slice(1))
