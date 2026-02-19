@@ -18,6 +18,70 @@
     <main class="divider">
       <section class="products">
         <h2>Review & Place your Order</h2>
+
+        <div class="checkout-grid">
+          <form id="checkout-form" class="checkout-form">
+            <fieldset>
+              <legend>Customer Information</legend>
+              <lable>
+                First name
+                <input name="fname" type="text" required />
+              </lable>
+
+              </lable>
+                Last name
+                <input name="lname" type="text" required />
+              </lable>
+            </fieldset>
+
+            <fieldset>
+              <legend>Shipping Address</legend>
+              <label>
+                Street Address
+                <input name="street" type="text" required />
+              </label>
+              </label>
+                City
+                <input name="city" type="text" required />
+              </label>
+              </label>
+                State
+                <input name="state" type="text" required />
+              </label>
+              </label>
+                Zip
+                <input name="zip" type="text" id="zip" inputmode="numeric" required />
+              </label>
+            </fieldset>
+
+            <fieldset>
+              <legent>Payment</legent>
+              <label>Card Number
+                <input name="cardNumber" type="text" inputmode="numeric" required />
+              </label>
+              <label>
+                Experiation (MM/YY)
+                <input name="experation" type="test" required />
+              </label>
+              <label>
+                Security Code
+                <input name="code" type="text" inputmode="numeric" required />
+              </label>
+            </fieldset>
+
+            <section class="order-summary">
+              <h3>Order Summary</h3>
+              <p>Item Subtotal: $<span id="numItems">0.00</span></p>
+              <p>Shipping: $<span id="shipping">0.00</span></p>
+              <p>Tax: $<span id="tax">0.00</span></p>
+              <p>Order Total: $<span id="orderTotal">0.00</span></p>
+            </section>
+
+            <button type="submit">Place Order</button>
+          </form>
+
+
+        </div>
       </section>
     </main>
 
