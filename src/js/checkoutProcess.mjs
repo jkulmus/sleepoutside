@@ -43,6 +43,36 @@ const checkoutProcess = {
         tax.innerText = "$" + this.tax;
         orderTotal.innerText = "$" + this.orderTotal;
 
+    },
+
+    packageItems: function (items) {
+        const simpleItems = items.map((item) => {
+            console.log(item);
+            return {
+                id: item.Id,
+                name: item.Name,
+                price: item.FinalPrice,
+                quantity: 1,
+            };
+        });
+        return simpleItems;
+    },
+
+    checkout: async function (form) {
+    const json = formDataToJSON(form);
+    json.orderData = new Date();
+    json.orderTotal = this.orderTotal;
+    json.tax = this.tax;
+    json.shipping = this.shipping;
+    json.items = packageItems(this.list);
+    console.log(json);
+    try {
+        const res = await checkout(json);
+        console.log(res);
+    } catch (err) {
+        console.log(err);
     }
-}
+  },
+};
+
 export default checkoutProcess; 
