@@ -1,5 +1,34 @@
-import {getLocalStorage} from "./utils.mjs"
+import {
+    setLocalStorage,
+    getLocalStorage,
+    alertMessage,
+    removeAllAlerts,
+} from "./utils.mjs"
 import { checkout } from "./externalServices.mjs"
+
+function formDataToJSON(formElement) {
+    const formData = new FormData(formElement),
+        convertedJSON = {};
+
+    formData.forEach(function (value, key) {
+        convertedJSON[key] = value;
+    });
+
+    return convertedJSON;
+}
+
+function packageItems(item) {
+    const simplifiedItems = items.map((item) => {
+        console.log(item);
+        return {
+            id: item.id,
+            price: item.FinalPrice,
+            name: item.Name,
+            quantity: 1,
+        };
+    });
+    return simplifiedItems
+}
 
 const checkoutProcess = {
     key: "", 
@@ -58,19 +87,26 @@ const checkoutProcess = {
         return simpleItems;
     },
 
-    checkout: async function (form) {
+  checkout: async function (form) {
     const json = formDataToJSON(form);
-    json.orderData = new Date();
+    json.orderDate = new Date();
     json.orderTotal = this.orderTotal;
     json.tax = this.tax;
     json.shipping = this.shipping;
     json.items = packageItems(this.list);
     console.log(json);
     try {
-        const res = await checkout(json);
-        console.log(res);
+      const res = await checkout(json);
+      console.log(res);
+      setLocalStorage("so-cart", []);
+      location.assign("/checkout/success.html");
     } catch (err) {
-        console.log(err);
+      removeAllAlerts();
+      for (let message in err.message) {
+        alertMessage(err.message[message]);
+      }
+
+      console.log(err);
     }
   },
 };

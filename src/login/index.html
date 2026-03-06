@@ -3,29 +3,35 @@
   <head> 
     <meta charset="UTF-8" /> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-    <title>Sleep Outside | Product Details</title> 
+    <title>Sleep Outside | Home</title> 
     
     <link rel="stylesheet" href="../css/style.css" /> 
-    <script type="module" src="../login.js" defer></script> 
+    <script type="module" src="../js/login.js" defer></script> 
   </head> 
 
     <body> 
 
         <header class="divider" id="main-header"></header>
 
-        <main>
-            <section class="login">
-                <h1>Login</h1>
-                <form id="login-form">
-                    <label>Email:</label>
-                    <input type="text" id="email" placeholder="example@mail.com" required>
-                    <label>Password:</label>
-                    <input type="password" id="password" placeholder="min 8 characters" required>
-                    <button type="submit" id="login-button">Sign In</button>
-                </form>
-            </section>
-
+        <main class="divider">
+            <fieldset class="login-form">
+                <legend>Login</legend>
+                <p>
+                    <label for="email">Email</label>
+                    <input
+                        type="text"
+                        placeholder="email"
+                        id="email"
+                        value="user1@email.com"
+                    />
+                </p>
+                <p>
+                    <label for="password">Password</label>
+                    <input type="text" placeholder="password" id="password" />
+                </p>
+                <button type="submit" id="loginButton">Login</button>
+            </fieldset>
         </main>
         <footer id="main-footer"></footer> 
     </body>
-        
+</html>
