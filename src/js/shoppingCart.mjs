@@ -39,6 +39,10 @@ function removeFromCart(id) {
   updateCartCount();
 }
 
+function renderCartTotal(items){
+  
+}
+
 function cartItemTemplate(item) {
   return `<li class="cart-card divider">
   <span class="cart-card__remove" data-id="${item.Id}">X</span>

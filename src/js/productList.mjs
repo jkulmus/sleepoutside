@@ -1,13 +1,13 @@
-import { getData } from "./productData.mjs"; 
-import { renderListWithTemplate } from "./utils.mjs"; 
+import { getProductsByCategory } from "./externalServices.mjs";
+import { renderListWithTemplate } from "./utils.mjs";
 
 function productCardTemplate(product) {
   const originalPrice = product.SuggestedRetailPrice;
-  const final = product.FinalPrice ?? originalPrice;  
+  const final = product.FinalPrice ?? originalPrice;
   const discount = final < originalPrice;
   const discountPercentage = discount
-        ? Math.round(((originalPrice - final) / originalPrice) * 100)
-        : 0;
+    ? Math.round(((originalPrice - final) / originalPrice) * 100)
+    : 0;
   return `<li class="product-card">
     <a href="/product_pages/index.html?product=${product.Id}">
         <p class="discount__badge">
@@ -26,10 +26,10 @@ function productCardTemplate(product) {
   </li>`;
 }
 
-export default async function productList(selector, category) { 
-  const el = document.querySelector(selector); 
-  const products = await getData(category);
+export default async function productList(selector, category) {
+  const el = document.querySelector(selector);
+  const products = await getProductsByCategory(category);
 
-  renderListWithTemplate(productCardTemplate, el, products); 
-  
+  renderListWithTemplate(productCardTemplate, el, products);
+
 }
