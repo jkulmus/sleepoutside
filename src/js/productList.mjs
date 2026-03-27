@@ -2,12 +2,15 @@ import { getProductsByCategory } from "./externalServices.mjs";
 import { renderListWithTemplate } from "./utils.mjs";
 
 function productCardTemplate(product) {
+  if (!product.Images || !product.Brand) return "";
+
   const originalPrice = product.SuggestedRetailPrice;
   const final = product.FinalPrice ?? originalPrice;
-  const discount = final < originalPrice;
+  const discount = originalPrice > final;
   const discountPercentage = discount
     ? Math.round(((originalPrice - final) / originalPrice) * 100)
     : 0;
+
   return `<li class="product-card">
     <a href="/product_pages/index.html?product=${product.Id}">
         <p class="discount__badge">
@@ -28,8 +31,15 @@ function productCardTemplate(product) {
 
 export default async function productList(selector, category) {
   const el = document.querySelector(selector);
-  const products = await getProductsByCategory(category);
+  el.innerHTML = "<li>Loading products...</li>";
 
-  renderListWithTemplate(productCardTemplate, el, products);
+  try {
+    const products = await getProductsByCategory(category);
+    const validProducts = products.filter(p => p.Id && p.Images);
 
+    renderListWithTemplate(productCardTemplate, el, validProducts);
+  } catch (err) {
+    console.error("Error in productList:", err);
+    el.innerHTML = "<li>Unable to load products. Please try again later.</li>";
+  }
 }
