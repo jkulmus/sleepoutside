@@ -64,6 +64,7 @@ function loadTemplate(path) {
       const html = await res.text();
       return html;
     }
+    throw new Error(`Could not load template: ${path}`);
   };
 }
 
@@ -73,8 +74,27 @@ export async function loadHeaderFooter() {
   const headerEl = document.querySelector("#main-header");
   const footerEl = document.querySelector("#main-footer");
 
-  await renderWithTemplate(headerTemplateFn, headerEl);
-  await renderWithTemplate(footerTemplateFn, footerEl);
+  if (headerEl) {
+    await await renderWithTemplate(headerTemplateFn, headerEl);
+  }
+
+  if (footerEl) {
+    await await renderWithTemplate(footerTemplateFn, footerEl);
+  }
 }
 
+export function alertMessage(message, scroll = true) {
+  const alert = document.createElement("div");
+  alert.className = "alert-message";
+  alert.textContent = message;
 
+  document.body.prepend(alert);
+
+  if (scroll) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  setTimeout(() => {
+    alert.remove();
+  }, 3000);
+}

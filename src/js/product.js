@@ -1,5 +1,13 @@
-import { getParam } from "./utils.mjs";
+import { getParam, loadHeaderFooter } from "./utils.mjs";
 import productDetails from "./productDetails.mjs";
 
+await loadHeaderFooter();
+
 const productId = getParam("product");
-productDetails(productId);
+console.log("Product ID:", productId);
+
+if (productId) {
+    productDetails(productId);
+} else {
+    console.error("No product ID found");
+}

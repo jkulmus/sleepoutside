@@ -40,4 +40,3 @@ export default async function loadAlerts() {
     } catch (error) {
         console.error("Error loading alerts:", error);
     }
-}
