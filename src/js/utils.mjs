@@ -67,16 +67,6 @@ function loadTemplate(path) {
   };
 }
 
-export function updateCartCount() {
-  const cartItems = getLocalStorage("so-cart") || [];
-  const cartCountEl = document.querySelector(".cart-badge");
-
-  if (cartCountEl) {
-    cartCountEl.textContent = cartItems.length;
-    cartCountEl.style.display = cartItems.length > 0 ? "block" : "none";
-  }
-}
-
 export async function loadHeaderFooter() {
   const headerTemplateFn = loadTemplate("/partials/header.html"); 
   const footerTemplateFn = loadTemplate("/partials/footer.html");
@@ -85,6 +75,6 @@ export async function loadHeaderFooter() {
 
   await renderWithTemplate(headerTemplateFn, headerEl);
   await renderWithTemplate(footerTemplateFn, footerEl);
-
-  updateCartCount();
 }
+
+

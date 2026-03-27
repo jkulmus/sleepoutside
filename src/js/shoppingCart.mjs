@@ -1,53 +1,29 @@
-import { 
-  getLocalStorage, 
-  setLocalStorage, 
-  renderListWithTemplate, 
-  updateCartCount 
-} from "./utils.mjs";
+import { getLocalStorage, renderListWithTemplate } from "./utils.mjs";
 
-export default function ShoppingCart() { 
-  const cartItems = getLocalStorage("so-cart") || []; 
+export default function shoppingCart() { 
+  const cartItems = getLocalStorage("so-cart"); 
   const outputEl = document.querySelector(".product-list"); 
-
-  renderListWithTemplate(cartItemTemplate, outputEl, cartItems); 
-
-  if (!outputEl.dataset.listenerAdded) { 
-    outputEl.addEventListener("click", (e) => { 
-      if (e.target.classList.contains("cart-card__remove")) { 
-        const idToRemove = e.target.dataset.id; 
-        removeFromCart(idToRemove); 
-      } 
-    }); 
-    
-    outputEl.dataset.listenerAdded = "true"; 
-  } 
-}
-
-function removeFromCart(id) {
-  let cartItems = getLocalStorage("so-cart") || [];
-
-  const index = cartItems.findIndex((item) => item.Id === id);
-  if (index !== -1) {
-    cartItems.splice(index, 1);
-  }
-  
-  setLocalStorage("so-cart", cartItems);
-
-  const outputEl = document.querySelector(".product-list");
   renderListWithTemplate(cartItemTemplate, outputEl, cartItems);
-
-  updateCartCount();
+  const total = calculateListTotal(cartItems);
+  displayCartTotal(total);
 }
 
-function renderCartTotal(items){
-  
+function displayCartTotal(total) {
+  if (total > 0) {
+    document.querySelector(".list-footer").classList.remove("hide");
+    document.querySelector(".list-total").innerText += `$${total}`;
+  } else {
+    document.querySelector(".list-footer").classList.add("hide");
+  }
 }
 
 function cartItemTemplate(item) {
-  return `<li class="cart-card divider">
-  <span class="cart-card__remove" data-id="${item.Id}">X</span>
+  const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
-    <img src="${item.Image}" alt="${item.Name}" />
+    <img
+      src="${item.Images.PrimaryMedium}"
+      alt="${item.Name}"
+    />
   </a>
   <a href="#">
     <h2 class="card__name">${item.Name}</h2>
@@ -56,4 +32,12 @@ function cartItemTemplate(item) {
   <p class="cart-card__quantity">qty: 1</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
 </li>`;
+
+  return newItem;
+}
+
+function calculateListTotal(list) {
+  const amounts = list.map((item) => item.FinalPrice);
+  const total = amounts.reduce((sum, item) => sum + item, 0);
+  return total;
 }

@@ -1,5 +1,5 @@
 import { findProductById } from "./externalServices.mjs";
-import { setLocalStorage, getLocalStorage, updateCartCount } from "./utils.mjs";
+import { setLocalStorage, getLocalStorage, alertMessage } from "./utils.mjs";
 
 let product = {};
 
@@ -10,29 +10,27 @@ export default async function productDetails(productId) {
 }
 
 function addToCart() {
-  let cartContents = getLocalStorage("so-cart") || [];
+  let cartContents = getLocalStorage("so-cart");
+
+  if (!cartContents) {
+    cartContents = [];
+  }
+
   cartContents.push(product);
   setLocalStorage("so-cart", cartContents);
-
-  updateCartCount();
-
-  const backpack = document.querySelector(".cart svg");
-  if (backpack) {
-    backpack.classList.add("animate-cart");
-    setTimeout(() => backpack.classList.remove("animate-cart"), 500);
-  }
+  alertMessage(`${product.NameWithoutBrand} added to cart!`);
 }
 
 function renderProductDetails() {
   document.querySelector("#productName").innerText = product.Brand.Name;
-  document.querySelector("#productNameWithoutBrand").innerText = product.NameWithoutBrand;
-
+  document.querySelector("#productNameWithoutBrand").innerText =
+    product.NameWithoutBrand;
   document.querySelector("#productImage").src = product.Images.PrimaryLarge;
   document.querySelector("#productImage").alt = product.Name;
-
   document.querySelector("#productFinalPrice").innerText = product.FinalPrice;
-  document.querySelector("#productColorName").innerText = product.Colors[0].ColorName;
-  document.querySelector("#productDescriptionHtmlSimple").innerHTML = product.DescriptionHtmlSimple;
-
+  document.querySelector("#productColorName").innerText =
+    product.Colors[0].ColorName;
+  document.querySelector("#productDescriptionHtmlSimple").innerHTML =
+    product.DescriptionHtmlSimple;
   document.querySelector("#addToCart").dataset.id = product.Id;
 }

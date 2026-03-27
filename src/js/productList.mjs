@@ -2,8 +2,6 @@ import { getProductsByCategory } from "./externalServices.mjs";
 import { renderListWithTemplate } from "./utils.mjs";
 
 function productCardTemplate(product) {
-  if (!product.Images || !product.Brand) return "";
-
   const originalPrice = product.SuggestedRetailPrice;
   const final = product.FinalPrice ?? originalPrice;
   const discount = originalPrice > final;
@@ -13,33 +11,21 @@ function productCardTemplate(product) {
 
   return `<li class="product-card">
     <a href="/product_pages/index.html?product=${product.Id}">
-        <p class="discount__badge">
-            -${discountPercentage}%
-        </p>
-        <img
-          src="${product.Images.PrimaryMedium}"
-          alt="Image of ${product.Name}"
-        />
-        <h3 class="card__brand">${product.Brand.Name}</h3>
-        <h2 class="card__name">${product.NameWithoutBrand}</h2>
-        <p class="product-card__price">$${final}</p>
-        <p class="card__price">$${originalPrice}
-        <p class="sale__price">$${product.FinalPrice}</p>
-    </a>
+    <img
+      src="${product.Images.PrimaryMedium}"
+      alt="Image of ${product.Name}"
+    />
+    <h3 class="card__brand">${product.Brand.Name}</h3>
+    <h2 class="card__name">${product.NameWithoutBrand}</h2>
+    <p class="product-card__price">$${product.FinalPrice}</p></a>
   </li>`;
 }
 
 export default async function productList(selector, category) {
   const el = document.querySelector(selector);
-  el.innerHTML = "<li>Loading products...</li>";
+  const products = await getProductsByCategory(category);
+  console.log(products);
 
-  try {
-    const products = await getProductsByCategory(category);
-    const validProducts = products.filter(p => p.Id && p.Images);
-
-    renderListWithTemplate(productCardTemplate, el, validProducts);
-  } catch (err) {
-    console.error("Error in productList:", err);
-    el.innerHTML = "<li>Unable to load products. Please try again later.</li>";
-  }
+  renderListWithTemplate(productCardTemplate, el, products);
+  document.querySelector(".title").innerHTML = category;
 }
