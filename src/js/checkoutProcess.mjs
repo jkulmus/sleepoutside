@@ -3,15 +3,14 @@ import {
     getLocalStorage,
     alertMessage,
     removeAllAlerts,
-} from "./utils.mjs"
-import { checkout } from "./externalServices.mjs"
+} from "./utils.mjs";
+import { checkout } from "./externalServices.mjs";
 
-// Helper function
-function formDataToJSON(formElement) {
+function fromDataToJSON(formElement) {
     const formData = new FormData(formElement);
     const convertedJSON = {};
 
-    formData.forEach(([key, value]) => {
+    formData.forEach((value, key) => {
         convertedJSON[key] = value;
     });
 
@@ -41,15 +40,15 @@ const checkoutProcess = {
         this.outputSelector = outputSelector;
         this.list = normalizeCart(getLocalStorage(key) || []);
         this.calculateItemSummary();
-        this.calculateOrdertotal();
+        this.calculateOrderTotal();
     },
 
-    calculateItemSummary: function() {
+    calculateItemSummary: function () {
         const summaryElement = document.querySelector(
             `${this.outputSelector} #cartTotal`
         );
         const itemNumElement = document.querySelector(
-            `${this.outputSelector} #num-items`  
+            `${this.outputSelector} #numItems`
         );
 
         const totalItems = this.list.reduce(
@@ -78,7 +77,7 @@ const checkoutProcess = {
         );
 
         this.shipping = totalItems > 0 ? 10 + (totalItems - 1) * 2 : 0;
-        this.tax = (this.itemTotal * 0.06).toFixed(2);
+        this.tax = (this.itemTotal * .06).toFixed(2);
         this.orderTotal = (
             parseFloat(this.itemTotal) +
             parseFloat(this.shipping) +
@@ -95,7 +94,7 @@ const checkoutProcess = {
             `${this.outputSelector} #orderTotal`
         );
 
-        if (shipping) shipping.innerText = this.shipping.toFixed(2);
+        if (shipping) shipping.innerText = Number(this.shipping).toFixed(2);
         if (tax) tax.innerText = this.tax;
         if (orderTotal) orderTotal.innerText = this.orderTotal;
     },
@@ -109,12 +108,12 @@ const checkoutProcess = {
         const json = formDataToJSON(form);
         json.orderDate = new Date().toISOString();
         json.orderTotal = this.orderTotal;
-        json.tax = this.shipping;
+        json.tax = this.tax;
         json.shipping = this.shipping;
         json.items = packageItems(this.list);
 
         try {
-            const res = await checkout(json);
+            const res = await checkout (json);
             console.log(res);
             setLocalStorage("so-cart", []);
             location.assign("/checkout/success.html");
@@ -134,10 +133,10 @@ const checkoutProcess = {
     },
 };
 
-function normalizeCart(items) {
+function normalizeCart(item) {
     const grouped = {};
 
-    items.forEach((item) => {
+    item.forEach((item) => {
         const id = item.Id;
         if (!grouped[id]) {
             grouped[id] = {
