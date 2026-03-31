@@ -4,7 +4,6 @@ import productDetails from "./productDetails.mjs";
 await loadHeaderFooter();
 
 const productId = getParam("product");
-console.log("Product ID:", productId);
 
 if (productId) {
     productDetails(productId);

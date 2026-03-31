@@ -1,20 +1,22 @@
 import { loadHeaderFooter } from "./utils.mjs";
 import checkoutProcess from "./checkoutProcess.mjs";
 
-loadHeaderFooter();
+await loadHeaderFooter();
 
 checkoutProcess.init("so-cart", ".checkout-summary");
 
-document
-  .querySelector("#zip")
-  .addEventListener(
+const zipInput = document.querySelector("#zip");
+if (zipInput) {
+  zipInput.addEventListener(
     "blur",
     checkoutProcess.calculateOrdertotal.bind(checkoutProcess)
   );
+}
 
-
-  document.forms["checkout"].addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  checkoutProcess.checkout(e.target);
-});
+const checkoutForm = document.querySelector("#checkout-form");
+if (checkoutForm) {
+  checkoutForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    checkoutProcess.checkout(e.target);
+  });
+}

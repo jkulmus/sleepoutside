@@ -4,19 +4,31 @@ export function qs(selector, parent = document) {
 }
 
 export function getLocalStorage(key) {
-  return JSON.parse(localStorage.getItem(key));
+  const data = localStorage.getItem(key);
+  if (!data) return null;
+
+  try {
+    return JSON.parse(data);
+  } catch (error) {
+    console.error(`Error parsing localStorage key "${key}":`, error);
+    return null;
+  }
 }
-// save data to local storage
+
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
-// set a listener for both touchend and click
+
 export function setClick(selector, callback) {
-  qs(selector).addEventListener("touchend", (event) => {
+  const element = qs(selector);
+  if (!element) return;
+
+  element.addEventListener("touched", (event) => {
     event.preventDefault();
-    callback();
+    callback(event);
   });
-  qs(selector).addEventListener("click", callback);
+
+  element.addEventListener("click", callback);
 }
 
 export function getParam(param) {
@@ -32,11 +44,16 @@ export function renderListWithTemplate(
   position = "afterbegin",
   clear = true
 ) {
+  if (!parentElement) return;
+
   if (clear) {
     parentElement.innerHTML = "";
   }
-  const htmlString = list.map(templateFn);
-  parentElement.insertAdjacentHTML(position, htmlString.join(""));
+
+  if (!Array.isArray(list) || list.length === 0) return;
+
+  const htmlString = list.map(templateFn).join("");
+  parentElement.insertAdjacentHTML(position, htmlString);
 }
 
 export async function renderWithTemplate(
@@ -47,11 +64,15 @@ export async function renderWithTemplate(
   position = "afterbegin",
   clear = true
 ) {
+  if (!parentElement) return;
+
   if (clear) {
     parentElement.innerHTML = "";
   }
+
   const htmlString = await templateFn(data);
   parentElement.insertAdjacentHTML(position, htmlString);
+
   if (callback) {
     callback(data);
   }
@@ -60,27 +81,32 @@ export async function renderWithTemplate(
 function loadTemplate(path) {
   return async function () {
     const res = await fetch(path);
-    if (res.ok) {
-      const html = await res.text();
-      return html;
+    if (!res.ok) {
+      throw new Error(`Could not load template: ${path}`);
     }
-    throw new Error(`Could not load template: ${path}`);
+    return await res.text();
   };
 }
 
 export async function loadHeaderFooter() {
   const headerTemplateFn = loadTemplate("/partials/header.html"); 
   const footerTemplateFn = loadTemplate("/partials/footer.html");
+
   const headerEl = document.querySelector("#main-header");
   const footerEl = document.querySelector("#main-footer");
 
   if (headerEl) {
-    await await renderWithTemplate(headerTemplateFn, headerEl);
+    await renderWithTemplate(headerTemplateFn, headerEl);
   }
 
   if (footerEl) {
-    await await renderWithTemplate(footerTemplateFn, footerEl);
+    await renderWithTemplate(footerTemplateFn, footerEl);
   }
+}
+
+export function removeAllAlerts() {
+  const alerts = document.querySelectorAll(".alert-message");
+  alerts.forEach((alert) => alert.remove());
 }
 
 export function alertMessage(message, scroll = true) {

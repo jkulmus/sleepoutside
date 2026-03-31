@@ -13,7 +13,6 @@
     <header class="divider" id="main-header"></header> 
     
     <main class="divider"> <section class="product-detail"> 
-      
       <!-- PRODUCT NAME --> 
        <h3 id="productName"></h3> 
        <h2 class="divider" id="productNameWithoutBrand"></h2> 
@@ -22,9 +21,14 @@
         <img id="productImage" class="divider" src="" alt="" /> 
         
         <!-- PRODUCT PRICE --> 
-         <p class="product-card__price"> 
-          Price: $<span id="productFinalPrice"></span> 
-        </p> 
+         <p class="product-card__price">
+            <span id="discountBadge" class="discount__badge hidden"></span>
+        </p>
+
+        <p>
+          <span class="card__price hidden" id="productOriginalPrice"></span>
+          <span class="sale__price">$<span id="productFinalPrice"></span></span>
+        </p>
         
         <!-- PRODUCT COLOR --> 
          <p class="product__color"> 
@@ -32,13 +36,15 @@
         </p> 
         
         <!-- PRODUCT DESCRIPTION --> 
-         <div class="product__description" id="productDescriptionHtmlSimple"></div> 
+         <div 
+            class="product__description" 
+            id="productDescriptionHtmlSimple"
+          ></div> 
          
          <!-- ADD TO CART BUTTON --> 
           <div class="product-detail__add"> 
             <button id="addToCart" data-id="">Add to Cart</button> 
           </div> 
-        
         </section> 
       </main> 
       

@@ -7,26 +7,36 @@ export default async function loadAlerts() {
         if (!alerts || !alerts.length) return;
 
         const main = document.querySelector("main");
+        if (!main) return;
+
         const section = document.createElement("section");
         section.classList.add("alert-list");
 
         const styles = {
             info: { background: "#b8c4ce", color: "#f7f9fb", icon: "ℹ️" },
-            sale: { background: "#e3e8e2", color: "#0b5c3b", icon: "💸" }
+            sale: { background: "#e3e8e2", color: "#0b5c3b", icon: "💸" },
+            warning: { background: "#fef3c7", color: "#92400e", icon: "⚠️"},
         };
 
-        alerts.forEach(alert => {
+        alerts.forEach((alert) => {
             const p = document.createElement("p");
-            p.classList.add("alert-item");
-            const style = styles[alert.type] || {};
+            p.classList.add("alert-item", "slide-down");
 
-            p.style.background = alert.background || style.background;
-            p.style.color = alert.color || style.color;
-            p.innerHTML = `<span class="alert-icon">${style.icon || "🔔"}</span> ${alert.message}`;
+            const style = styles[alert.type] || {};
+            p.style.background = alert.background || style.background || "#eee";
+            p.style.color = alert.color || style.color || "#333";
+
+            p.innerHTML = `
+                <span class="alert-icon">${style.icon || "🔔"}</span>
+                <span>${alert.message}</span>
+            `;
 
             const closeBtn = document.createElement("span");
             closeBtn.textContent = "✖";
             closeBtn.classList.add("alert-close");
+            closeBtn.setAttribute("role", "button");
+            closeBtn.setAttribute("aria-label", "Close alert");
+
             closeBtn.addEventListener("click", () => {
                 p.classList.add("fade-out");
                 setTimeout(() => p.remove(), 300);
@@ -40,3 +50,4 @@ export default async function loadAlerts() {
     } catch (error) {
         console.error("Error loading alerts:", error);
     }
+}
