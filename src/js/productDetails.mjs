@@ -17,12 +17,18 @@ export default async function productDetails(productId) {
     if (addButton) {
       addButton.addEventListener("click", addToCart);
     }
-  } catch (error) {
-    console.error("Error loading product details:", error);
-
+  } catch  {
     const section = document.querySelector(".product-detail");
     if (section) {
-      section.innerHTML = "<p>Sorry, this product could not be loaded.</p>";
+      section.innerHTML = `
+      <h2>Product Not Found</h2>
+      <p>Sorry, this product could not be loaded.</p>
+      `;
+    }
+
+    const addButton = document.getElementById("addToCart");
+    if (addButton) {
+      addButton.style.display = "none";
     }
   }
 }

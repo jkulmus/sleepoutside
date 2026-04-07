@@ -9,8 +9,7 @@ export function getLocalStorage(key) {
 
   try {
     return JSON.parse(data);
-  } catch (error) {
-    console.error(`Error parsing localStorage key "${key}":`, error);
+  } catch {
     return null;
   }
 }
