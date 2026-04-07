@@ -39,9 +39,9 @@ function productCardTemplate(product) {
   `;
 }
 
-export default async function productList(selector, category) {
+export default async function productList(category, selector) {
   const el = document.querySelector(selector);
-  if (!el) return;
+  if (!el) return [];
 
   const products = await getProductsByCategory(category);
   renderListWithTemplate(productCardTemplate, el, products);
@@ -50,4 +50,6 @@ export default async function productList(selector, category) {
   if (title) {
     title.textContent = category.replace("-", " ");
   }
+
+  return products;
 }

@@ -1,5 +1,6 @@
 import { findProductById } from "./externalServices.mjs";
 import { setLocalStorage, getLocalStorage, alertMessage } from "./utils.mjs";
+import { setBreadcrumb } from "./breadcrumb.mjs";
 
 let product = {};
 
@@ -12,12 +13,15 @@ export default async function productDetails(productId) {
     }
 
     renderProductDetails();
+    setBreadcrumb(`${product.Category} > ${product.NameWithoutBrand}`);
 
     const addButton = document.getElementById("addToCart");
     if (addButton) {
       addButton.addEventListener("click", addToCart);
     }
   } catch  {
+    setBreadcrumb("Product Not Found");
+
     const section = document.querySelector(".product-detail");
     if (section) {
       section.innerHTML = `
